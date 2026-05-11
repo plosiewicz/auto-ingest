@@ -1,0 +1,8 @@
+requests>=2.31.0
+python-dotenv>=1.0.1
+tenacity>=8.2.0
+urllib3>=2.0.0
+
+# Only needed if you use --source-dir to convert PDF/DOCX/PPTX -> .md.
+# Drop this line if you only ever ingest pre-converted markdown.
+markitdown[pdf,docx,pptx]>=0.1.0
