@@ -620,12 +620,16 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
 
 
 def main(argv: list[str] | None = None) -> int:
+    # Load .env BEFORE parse_args(): the provision subparser reads env vars
+    # to compute its argparse defaults (--db-name, --project-name, etc.) at
+    # parse time. If we load .env after parse_args, those defaults fall back
+    # to the hard-coded values even when the user filled in .env.
+    load_dotenv(override=False)
     args = parse_args(argv)
     logging.basicConfig(
         level=logging.INFO if args.verbose else logging.WARNING,
         format="%(asctime)s %(levelname)s %(name)s: %(message)s",
     )
-    load_dotenv(override=False)
     return args.func(args)
 
 
